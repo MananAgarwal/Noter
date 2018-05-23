@@ -58,11 +58,16 @@
         getInitialState: function () {
             return {
                 comments: [
-                    'I like react',
-                    'But is it better than Angular',
-                    'This is actually coming from an array'
+                    // 'I like react',
+                    // 'But is it better than Angular',
+                    // 'This is actually coming from an array'
                 ]
             }
+        },
+        add: function (text) {
+            var arr = this.state.comments;
+            arr.push(text);
+            this.setState({comments: arr})
         },
         removeComment: function (i) {
             var arr = this.state.comments;
@@ -84,7 +89,10 @@
         render: function () {
             return (
                     <div>
-                        {this.state.comments.map(this.eachComment)}
+                        <button onClick={this.add.bind(null, 'Write your comment here')}>Add New</button>
+                        <div>
+                            {this.state.comments.map(this.eachComment)}
+                        </div>
                     </div>
             );
         }
