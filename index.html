@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,10 +8,35 @@
     <script src="js/react.min.js"></script>
     <script src="js/react-dom.min.js"></script>
     <script src="js/browser.min.js"></script>
+    <!-- Firebase JS -->
+    <script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
 </head>
+
 <body>
 
     <div id="container"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBpPwCEFaJqnnk_5iCCTY9DdXFrqDiyCKc",
+            authDomain: "noter-28228.firebaseapp.com",
+            databaseURL: "https://noter-28228.firebaseio.com",
+            projectId: "noter-28228",
+            storageBucket: "noter-28228.appspot.com",
+            messagingSenderId: "804088982156"
+        };
+        firebase.initializeApp(config);
+
+        // const db = firebase.database();
+        // const dbRef = db.ref().child('notes');
+        // dbRef.on('value', snapshot => {
+        //     this.setState({
+        //         data: snapshot.val()
+        //     });
+        // });
+    </script>
 
     <script type="text/babel">
       var Comment = React.createClass({
@@ -58,12 +84,35 @@
         getInitialState: function () {
             return {
                 comments: [
-                    // 'I like react',
-                    // 'But is it better than Angular',
-                    // 'This is actually coming from an array'
+                    'I like react',
+                    'But is it better than Angular',
+                    'This is interesting'
                 ]
             }
         },
+        /////////The following syntax is for ES6, here we use getInitialState instead
+        // constructor: function() {
+        //     super();
+        //     this.state = {
+        //         comments:[
+        //             'I love Firebase',
+        //             'I really hope this works'
+        //         ]
+        //     };
+        // },
+
+        componentDidMount: function() {
+            self = this;
+            const rootRef = firebase.database().ref().child('board');
+            const noteRef = rootRef.child('comments');
+
+            noteRef.on('value', function(snap){
+                console.log("snap val", snap.val())
+                console.log("state after access", self.state)
+                self.setState({comments: snap.val()})
+            });
+        },
+
         add: function (text) {
             var arr = this.state.comments;
             arr.push(text);
@@ -87,10 +136,12 @@
             );
         },
         render: function () {
+
             return (
                     <div>
                         <button onClick={this.add.bind(null, 'Write your comment here')}>Add New</button>
                         <div>
+                            {console.log(this.state)}
                             {this.state.comments.map(this.eachComment)}
                         </div>
                     </div>
@@ -102,5 +153,7 @@
 
     </script>
 
+
 </body>
+
 </html>
