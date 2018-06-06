@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +10,6 @@
     <!-- Firebase JS -->
     <script src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
 </head>
-
 <body>
 
     <div id="container"></div>
@@ -116,12 +114,18 @@
         removeComment: function (i) {
             var arr = this.state.comments;
             arr.splice(i, 1);
-            this.setState({comments: arr})
+
+            rootRef.set({
+                comments: arr
+            });
         },
         updateComment: function (newText, i) {
             var arr = this.state.comments;
             arr[i] = newText;
-            this.setState({comments: arr})
+
+            rootRef.set({
+                comments: arr
+            });
         },
         eachComment: function (text, i) {
             return (
@@ -147,8 +151,5 @@
       ReactDOM.render(<Board />, document.getElementById('container'));
 
     </script>
-
-
 </body>
-
 </html>
