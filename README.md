@@ -6,7 +6,7 @@ Simply open the index.html file and you are good to go. All the required depende
 
 **[master branch](https://github.com/MananAgarwal/Noter/tree/master)** - Run completely locally (No Internet required), but the notes are not persistent.
 
-**[firebase-integrated branch](https://github.com/MananAgarwal/Noter/tree/firebase-integrated)** - Integrated with Firebase's RealTime Database and uses Firebase Hosting to host it [here](https://noter-28228.firebaseapp.com/)
+**[firebase-integrated branch](https://github.com/MananAgarwal/Noter/tree/firebase-integrated)** - Integrated with Firebase's RealTime Database and uses Firebase Hosting to host it [here](https://noter-28228.firebaseapp.com/). It also has some features of Progressive Web Apps.
 
 It's written in the ES5 React Syntax.
 
