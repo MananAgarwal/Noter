@@ -28,17 +28,12 @@
             messagingSenderId: "804088982156"
         };
         firebase.initializeApp(config);
-
-        // const db = firebase.database();
-        // const dbRef = db.ref().child('notes');
-        // dbRef.on('value', snapshot => {
-        //     this.setState({
-        //         data: snapshot.val()
-        //     });
-        // });
     </script>
 
     <script type="text/babel">
+      const rootRef = firebase.database().ref().child('board');
+      const noteRef = rootRef.child('comments');
+      
       var Comment = React.createClass({
         getInitialState: function () {
             return {editing: false}
@@ -103,8 +98,6 @@
 
         componentDidMount: function() {
             self = this;
-            const rootRef = firebase.database().ref().child('board');
-            const noteRef = rootRef.child('comments');
 
             noteRef.on('value', function(snap){
                 console.log("snap val", snap.val())
@@ -112,11 +105,13 @@
                 self.setState({comments: snap.val()})
             });
         },
-
         add: function (text) {
-            var arr = this.state.comments;
-            arr.push(text);
-            this.setState({comments: arr})
+            this.state.comments.push(text);
+            var newCom = this.state.comments;
+
+            rootRef.set({
+                comments: newCom
+            });
         },
         removeComment: function (i) {
             var arr = this.state.comments;
